@@ -1,2 +1,3 @@
 # winmodel-validator-ts
-Validation library for TypeScript
+
+OpenWinSpec Validation library for TypeScript
