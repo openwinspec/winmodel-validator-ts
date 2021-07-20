@@ -1,6 +1,6 @@
 {
   "name": "winmodel-validator-ts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "OpenWinSpec model validator for nodejs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.24",
     "@types/node": "^16.3.2",
+    "@types/should": "^13.0.0",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
     "eslint": "^7.30.0",
@@ -25,5 +26,11 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.3",
     "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "call-me-maybe": "^1.0.1",
+    "json-schema-to-typescript": "^10.1.4",
+    "should": "^13.2.3",
+    "yaml": "^1.10.2"
   }
 }
