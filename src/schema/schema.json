@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://openwinspec.org/orderschema.json",
   "title": "Order",
   "description": "Order in Windows Branch",
@@ -42,10 +42,23 @@
   },
   "required": ["info", "openwinversion"],
   "definitions": {
+    "ID": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "prefix": {
+          "type": "string"
+        }
+      },
+      "required": ["value"]
+    },
     "Info": {
       "type": "object",
       "properties": {
         "id": {
+          "description": "Ункальный ID заказа",
           "type": "string"
         },
         "locale": {
@@ -59,8 +72,7 @@
       "description": "--- Описание геометрической точки 3D, если координата отсутствует то она равно 0, поэтому убрали required",
       "properties": {
         "id": {
-          "type": "number",
-          "description": "--- Добавлено для возможности ссылки на объект"
+          "$ref": "#/definitions/ID"
         },
         "x": {
           "type": "number"
@@ -78,7 +90,7 @@
       "description": "Описание геометрического отрезка 3D для проволочной модели",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "start": {
           "$ref": "#/definitions/Point"
@@ -97,7 +109,7 @@
       "description": "Полигон в 3D",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "sides": {
           "type": "array",
@@ -194,6 +206,12 @@
           "items": {
             "$ref": "#/definitions/Panel"
           }
+        },
+        "colors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Color"
+          }
         }
       }
     },
@@ -213,7 +231,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "vendorType": {
           "$ref": "#/definitions/VendorType"
@@ -225,23 +243,24 @@
           "type": "string"
         }
       },
-      "required": ["name"]
+      "required": ["id", "vendorType", "name"]
     },
     "VendorMaterial": {
       "type": "object",
       "properties": {
         "vendorId": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "article": {
-          "description": "--- Название !!!",
+          "description": "Артикул в учетных системах поставщика",
           "type": "string"
         },
         "name": {
+          "description": "Название в учетных системах поставщика",
           "type": "string"
         }
       },
-      "required": ["vendorId", "article"]
+      "required": ["vendorId", "article", "name"]
     },
     "ProfileType": {
       "type": "string",
@@ -260,10 +279,10 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "vendorId": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "name": {
           "type": "string"
@@ -276,7 +295,7 @@
       "description": "--- Описываем армирование здесь?",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "vendorArticle": {
           "$ref": "#/definitions/VendorMaterial"
@@ -285,7 +304,7 @@
           "$ref": "#/definitions/ProfileType"
         },
         "profileSystemId": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "a": {
           "type": "number"
@@ -316,6 +335,15 @@
         },
         "h1": {
           "type": "number"
+        },
+        "baseColor": {
+          "$ref": "#/definitions/ID"
+        },
+        "internalColor": {
+          "$ref": "#/definitions/ID"
+        },
+        "externalColor": {
+          "$ref": "#/definitions/ID"
         }
       },
       "required": ["id", "vendorArticle", "profileType"]
@@ -325,7 +353,7 @@
       "description": "--- Или армирование описываем отдельно ???",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "vendorArticle": {
           "$ref": "#/definitions/VendorMaterial"
@@ -356,8 +384,8 @@
     "Color": {
       "type": "object",
       "properties": {
-        "colorId": {
-          "type": "number"
+        "id": {
+          "$ref": "#/definitions/ID"
         },
         "colorName": {
           "type": "string"
@@ -369,14 +397,14 @@
           "$ref": "#/definitions/ColorType"
         }
       },
-      "required": ["colorId", "colorName", "colorCode", "colorType"]
+      "required": ["id", "colorName", "colorCode", "colorType"]
     },
     "Panel": {
       "type": "object",
       "description": "-- Заполнения",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "vendorArticle": {
           "$ref": "#/definitions/VendorMaterial"
@@ -415,7 +443,7 @@
       "description": "-- Стекло, характеристики Lt-Ug см. например https://www.agc-yourglass.com/en-UK/brands/energy",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "vendorArticle": {
           "$ref": "#/definitions/VendorMaterial"
@@ -449,7 +477,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "vendorArticle": {
           "$ref": "#/definitions/VendorMaterial"
@@ -488,7 +516,7 @@
       "description": "-- Дистанционная рамка",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "vendorArticle": {
           "$ref": "#/definitions/VendorMaterial"
@@ -515,7 +543,7 @@
       "description": "--- to be defined",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "name": {
           "typw": "string"
@@ -527,7 +555,7 @@
       "description": "--- to be defined",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "name": {
           "type": "string"
@@ -614,7 +642,7 @@
           "description": "Наличие компенсационных отверстий"
         }
       },
-      "requred": ["sillStub", "drained"]
+      "required": ["sillStub", "drained"]
     },
     "SashOpeningType": {
       "type": "string",
@@ -633,7 +661,7 @@
           "$ref": "#/definitions/SashOpeningType"
         }
       },
-      "requred": ["openingType"]
+      "required": ["openingType"]
     },
     "MullionFeature": {
       "type": "object",
@@ -652,11 +680,11 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "glazingId": {
           "description": "Ссылка на id из справочника glazing",
-          "type": "number"
+          "$ref": "#/definitions/ID"
         }
       }
     },
@@ -664,10 +692,11 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "panelId": {
-          "description": "Ссылка на id из справочника panel"
+          "description": "Ссылка на id из справочника panel",
+          "$ref": "#/definitions/ID"
         }
       }
     },
@@ -675,7 +704,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         }
       }
     },
@@ -764,7 +793,7 @@
       "description": "--- Балка профиля",
       "properties": {
         "profileId": {
-          "type": "number",
+          "$ref": "#/definitions/ID",
           "description": "--- Ссылка на профиль из справочника"
         },
         "cuttings": {
@@ -779,16 +808,16 @@
           "type": "boolean",
           "description": "наличие компенсационных отверстий на балке"
         },
-        "baseColor": {
-          "$ref": "#/definitions/Color",
+        "baseColorId": {
+          "$ref": "#/definitions/ID",
           "description": "-- цвет основы (для ПВХ)"
         },
-        "internalColor": {
-          "$ref": "#/definitions/Color",
+        "internalColorId": {
+          "$ref": "#/definitions/ID",
           "description": "-- цвет ламинации/покраски изнутри/сверху"
         },
-        "externalColor": {
-          "$ref": "#/definitions/Color",
+        "externalColorId": {
+          "$ref": "#/definitions/ID",
           "description": "-- цвет ламинации/покраски снаружи"
         }
       }
@@ -805,15 +834,15 @@
         },
         "geometryId": {
           "description": "--- ex poligon_id",
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "splitterId": {
           "description": "--- ссылка на геометрию сплиттера, как это объединить с geometryId ?",
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "profileId": {
           "description": "--- если применяется для всех балок компонента",
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "beams": {
           "type": "array",
@@ -836,14 +865,14 @@
       "description": "--- Элемент конструкции",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "elementType": {
           "description": "--- Тип элемента",
           "$ref": "#/definitions/ProductType"
         },
         "profileSystemId": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "geometry": {
           "type": "array",
@@ -872,25 +901,26 @@
       "description": "--- Описание сединителя элементов конструкции",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "geometry": {
           "$ref": "#/definitions/Segment"
         },
         "profileId": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "cutting": {
           "$ref": "#/definitions/BeamCuttings"
         }
-      }
+      },
+      "required": ["id"]
     },
     "Construction": {
       "type": "object",
       "description": "Конструкция в заказе",
       "properties": {
         "id": {
-          "type": "number"
+          "$ref": "#/definitions/ID"
         },
         "roughOpening": {
           "description": "--- Проем в заказе",
