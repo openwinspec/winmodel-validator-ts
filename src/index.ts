@@ -1,19 +1,28 @@
 import { Order } from './classes/classes';
+import { DefinedError } from 'ajv';
 
 import { createAjv } from './defs';
 import { schema } from './schema/schema';
 
-export const validate = (model: any) =>
-  Promise.all<boolean>([validateInner(model)]);
+export interface validateResult {
+  valid: boolean;
+  errors?: DefinedError[];
+}
 
-const validateInner = (model: any): Promise<boolean> => {
-  return new Promise<boolean>((resolve, reject) => {
+// todo: async validation
+
+// export const validateAll = (model: any) =>
+//   Promise.all<validateResult>([validateInner(model)]);
+
+export const validate = (model: any): Promise<validateResult> => {
+  return new Promise<validateResult>((resolve, reject) => {
     try {
       const valid = _validator(model);
-      if (valid) resolve(true);
-      else reject(_validator.errors);
+      if (valid) resolve({ valid: true });
+      else
+        reject({ valid: false, errors: _validator.errors as DefinedError[] });
     } catch (error) {
-      resolve(error);
+      reject(error);
     }
   });
 };

@@ -1,13 +1,4 @@
-import Ajv, {
-  AnySchemaObject,
-  CodeKeywordDefinition,
-  ErrorObject,
-  FuncKeywordDefinition,
-  KeywordCxt,
-  KeywordErrorDefinition,
-  SchemaObjCxt,
-  str,
-} from 'ajv';
+import Ajv, { FuncKeywordDefinition } from 'ajv';
 
 import * as ajv from 'ajv';
 
